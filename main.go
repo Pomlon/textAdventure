@@ -1,11 +1,25 @@
 package main
 
-func main() {
-	NewGUI()
-	g := newgame(nil)
-	g.init()
-	bootstrapUI()
+import (
+	"fmt"
 
+	"github.com/davecgh/go-spew/spew"
+)
+
+func main() {
+	/*NewGUI()
+	g := newgame(guimain.logChan)
+	g.init()
+	bootstrapUI()*/
+
+	mg := NewMapGen()
+	mg.GenerateMap(100, 0, 0, 1)
+	heder("NODES")
+	spew.Dump(mg.Graph.nodes)
+}
+
+func heder(s string) {
+	fmt.Println("===============================" + s + "================================")
 }
 
 /*

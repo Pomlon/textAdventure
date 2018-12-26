@@ -18,6 +18,9 @@ func (g *game) tick() {
 
 func (g *game) init() {
 	g.sendLog("Initialising game...")
+	mg := MapGen{}
+	mg.GenerateMap(100, 70, 1, 10)
+	g.sendLog(mg.Graph.String())
 	go g.tick()
 }
 
