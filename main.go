@@ -2,20 +2,24 @@ package main
 
 import (
 	"fmt"
-
-	"github.com/davecgh/go-spew/spew"
 )
 
 func main() {
-	/*NewGUI()
-	g := newgame(guimain.logChan)
-	g.init()
-	bootstrapUI()*/
 
-	mg := NewMapGen()
+	httpGameComms := make(chan string, 50)
+
+	NewGUI()
+	g := newgame(guimain.logChan, httpGameComms)
+	g.init()
+	commsvr := NewHTTPSvr(httpGameComms)
+	go commsvr.Start()
+	bootstrapUI()
+
+	/*mg := NewMapGen()
 	mg.GenerateMap(100, 0, 0, 1)
 	heder("NODES")
 	spew.Dump(mg.Graph.nodes)
+	*/
 }
 
 func heder(s string) {
