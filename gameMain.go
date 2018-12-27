@@ -1,8 +1,9 @@
 package main
 
 import (
-	"Pomlon/textAdventure/utils"
 	"encoding/json"
+
+	"github.com/Pomlon/textAdventure/utils"
 )
 
 type game struct {

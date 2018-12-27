@@ -1,7 +1,7 @@
 package main
 
 import "encoding/json"
-import "Pomlon/textAdventure/utils"
+import "github.com/Pomlon/textAdventure/utils"
 
 type JsonRes struct {
 	Status errcodes.ErrCode
