@@ -3,8 +3,9 @@ package main
 import "fmt"
 
 type Node struct {
-	id      int
-	visited bool
+	id             int
+	visited        bool
+	monsterHandler *MonsterHandler
 }
 
 func (n *Node) String() string {
