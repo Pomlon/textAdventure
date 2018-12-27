@@ -40,3 +40,12 @@ func (g *Graph) String() string {
 	}
 	return s
 }
+
+func (g *Graph) GetEdges(n *Node) []int {
+	e := g.edges[*n]
+	var paths []int
+	for _, path := range e {
+		paths = append(paths, path.id)
+	}
+	return paths
+}
