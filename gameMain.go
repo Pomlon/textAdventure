@@ -1,6 +1,7 @@
 package main
 
 import (
+	"Pomlon/textAdventure/utils"
 	"encoding/json"
 )
 
@@ -50,7 +51,7 @@ func (g *game) HandleCommand(c string) {
 	err := json.Unmarshal([]byte(c), &m)
 	if err != nil {
 		g.logChan <- err.Error()
-		g.commsChan <- ResponseJSON(false, err.Error())
+		g.commsChan <- ResponseJSON(errcodes.JSONParseErr, err.Error())
 	} else {
 		g.logChan <- m["command"].(string)
 		res := g.CommSwitch(m["command"].(string), m)
@@ -67,7 +68,7 @@ func (g *game) CommSwitch(c string, input map[string]interface{}) string {
 	case "mov":
 		return g.MovePlayer(c, input)
 	default:
-		return ResponseJSON(false, "You get confused.")
+		return ResponseJSON(errcodes.UnkownCommand, "You get confused.")
 	}
 }
 
@@ -80,7 +81,7 @@ func (g *game) EnterDung() string {
 		g.player.position = g.mg.Graph.nodes[0]
 		paths := g.mg.Graph.GetEdges(g.player.position)
 		res := jsonPaths{}
-		res.Status = true
+		res.Status = errcodes.OK
 		res.Msg = "Your party enters the dungeon."
 		res.AvailablePaths = paths
 		return MarshUp(res)
