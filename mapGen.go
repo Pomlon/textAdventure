@@ -21,8 +21,9 @@ func (mg *MapGen) GenerateMap(nodeCount, moreEdgesChance, edgesMin, edgesMax int
 	mg.generated = true
 	for i := 0; i < nodeCount; i++ {
 		mg.Graph.AddNode(&Node{
-			id:      i,
-			visited: false,
+			id:             i,
+			visited:        false,
+			monsterHandler: &MonsterHandler{},
 		})
 	}
 

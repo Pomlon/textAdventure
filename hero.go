@@ -1,9 +1,9 @@
 package main
 
-type hero struct {
-	pawn
+type Hero struct {
+	Pawn
 }
 
-func NewHero() *hero {
-	return &hero{}
+func NewHero() *Hero {
+	return &Hero{}
 }
