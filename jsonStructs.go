@@ -11,6 +11,24 @@ type JsonRes struct {
 type jsonPaths struct {
 	JsonRes
 	AvailablePaths []int
+	Monsters       []*Monster
+}
+
+type jsonPartyStatus struct {
+	JsonRes
+	Heroes []*Hero
+}
+
+type jsonAttack struct {
+	JsonRes
+	Damage  int
+	Monster *Monster
+}
+
+type jsonDamaged struct {
+	JsonRes
+	Damage int
+	Hero   Hero
 }
 
 func ResponseJSON(status errcodes.ErrCode, msg string) string {
