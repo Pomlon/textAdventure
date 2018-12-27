@@ -87,28 +87,28 @@ func (g *game) EnterDung() string {
 		res.AvailablePaths = paths
 		return MarshUp(res)
 	}
-	return ResponseJSON(false, "You're already in the dungeon, ya fuckwits!")
+	return ResponseJSON(errcodes.AlreadyInside, "You're already in the dungeon, ya fuckwits!")
 }
 
 func (g *game) ExitDung() string {
 	if g.player.inTown == true {
-		return ResponseJSON(false, "You're already in town idiot!")
+		return ResponseJSON(errcodes.AlreadyInside, "You're already in town idiot!")
 	}
 	if g.player.position == g.mg.Graph.nodes[0] {
 		g.player.inTown = true
-		return ResponseJSON(true, "Your party enters the town.")
+		return ResponseJSON(errcodes.OK, "Your party enters the town.")
 	}
-	return ResponseJSON(false, "Can't enter the town from the middle of the dungeon, ya mongloids!")
+	return ResponseJSON(errcodes.UnfulfilledReqs, "Can't enter the town from the middle of the dungeon, ya mongloids!")
 }
 
 func (g *game) MovePlayer(c string, command map[string]interface{}) string {
 
 	if g.player.inTown == true {
-		return ResponseJSON(false, "You strut around town aimlessly.")
+		return ResponseJSON(errcodes.CannotInTown, "You strut around town aimlessly.")
 	}
 	desired, castOK := command["path"].(float64)
 	if castOK == false {
-		return ResponseJSON(false, "There's no path like that. You all flop around on the dungeon floor.")
+		return ResponseJSON(errcodes.JSONParseErr, "There's no path like that. You all flop around on the dungeon floor.")
 	}
 	desiredPath := int(desired)
 	possiblePaths := g.mg.Graph.GetEdges(g.player.position)
@@ -117,12 +117,12 @@ func (g *game) MovePlayer(c string, command map[string]interface{}) string {
 		if path == desiredPath {
 			g.player.position = g.mg.Graph.nodes[desiredPath]
 			re := jsonPaths{}
-			re.Status = true
+			re.Status = errcodes.OK
 			re.Msg = "You enter a room"
 			re.AvailablePaths = g.mg.Graph.GetEdges(g.player.position)
 			return MarshUp(re)
 		}
 	}
 
-	return ResponseJSON(false, "Your whole party bouncess off a dungeon wall.")
+	return ResponseJSON(errcodes.DoesNotExist, "Your whole party bouncess off a dungeon wall.")
 }
