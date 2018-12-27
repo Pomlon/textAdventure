@@ -6,7 +6,8 @@ import (
 )
 
 type MapGen struct {
-	Graph Graph
+	Graph     Graph
+	generated bool
 }
 
 func NewMapGen() MapGen {
@@ -17,6 +18,7 @@ func NewMapGen() MapGen {
 
 func (mg *MapGen) GenerateMap(nodeCount, moreEdgesChance, edgesMin, edgesMax int) {
 	rand.Seed(time.Now().UnixNano())
+	mg.generated = true
 	for i := 0; i < nodeCount; i++ {
 		mg.Graph.AddNode(&Node{
 			id:      i,
