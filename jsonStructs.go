@@ -1,10 +1,10 @@
 package main
 
 import "encoding/json"
+import "Pomlon/textAdventure/utils"
 
 type JsonRes struct {
-	Status bool
-	Code   int
+	Status errcodes.ErrCode
 	Msg    string
 }
 
@@ -13,7 +13,7 @@ type jsonPaths struct {
 	AvailablePaths []int
 }
 
-func ResponseJSON(status bool, msg string) string {
+func ResponseJSON(status errcodes.ErrCode, msg string) string {
 	jerr := JsonRes{
 		Status: status,
 		Msg:    msg,
