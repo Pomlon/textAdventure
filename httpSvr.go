@@ -16,8 +16,9 @@ func (s *HTTPSvr) requestHandler(w http.ResponseWriter, r *http.Request) {
 	buf := make([]byte, 5192)
 	n, _ := r.Body.Read(buf)
 	s.commsChan <- string(buf[:n])
-
-	w.Write([]byte("HAITHAR"))
+	m := <-s.commsChan
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(m))
 }
 
 func (s *HTTPSvr) Start() {
