@@ -75,7 +75,7 @@ func (mg *MapGen) genEdge(from, count int) int {
 }
 
 func (mg *MapGen) CheckMap(node int) bool {
-	edges, exists := mg.Graph.edges[*mg.Graph.nodes[node]]
+	edges, exists := mg.Graph.edges[mg.Graph.nodes[node]]
 	if exists == true {
 		for i := 0; i < len(edges); i++ {
 			if edges[i].id == mg.Graph.nodes[node].id {
@@ -88,7 +88,7 @@ func (mg *MapGen) CheckMap(node int) bool {
 
 func (mg *MapGen) CheckReachability() []*Node {
 	visits := NewStack()
-	edgesFirstNode := mg.Graph.edges[*mg.Graph.nodes[0]]
+	edgesFirstNode := mg.Graph.edges[mg.Graph.nodes[0]]
 	mg.Graph.nodes[0].visited = true
 	for _, edge := range edgesFirstNode {
 		visits.Push(edge.id)
@@ -97,7 +97,7 @@ func (mg *MapGen) CheckReachability() []*Node {
 	for visits.Len() > 0 {
 		visiting := visits.Pop()
 		if mg.Graph.nodes[visiting].visited == false {
-			for _, edge := range mg.Graph.edges[*mg.Graph.nodes[visiting]] {
+			for _, edge := range mg.Graph.edges[mg.Graph.nodes[visiting]] {
 				visits.Push(edge.id)
 			}
 		}
