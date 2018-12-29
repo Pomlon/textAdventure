@@ -6,12 +6,12 @@ import (
 
 func main() {
 
-	httpGameComms := make(chan string, 50)
-
-	NewGUI()
+	httpGameComms := make(chan string, 10)
+	logChan := make(chan string, 100)
+	NewGUI(logChan)
 	g := newgame(guimain.logChan, httpGameComms)
 	g.init()
-	commsvr := NewHTTPSvr(httpGameComms)
+	commsvr := NewHTTPSvr(httpGameComms, logChan)
 	go commsvr.Start()
 	bootstrapUI()
 

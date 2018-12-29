@@ -75,10 +75,10 @@ type gameui struct {
 	logChan chan string
 }
 
-func NewGUI() {
+func NewGUI(logchan chan string) {
 	guimain = gameui{}
 	guimain.widgets = []ui.Bufferer{}
-	guimain.logChan = make(chan string, 100)
+	guimain.logChan = logchan
 }
 
 func (gui *gameui) Rend() {
